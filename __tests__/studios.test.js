@@ -5,6 +5,8 @@ const app = require('../lib/app');
 const connect = require('../lib/utils/connect');
 const mongoose = require('mongoose');
 const Studio = require('../lib/Models/Studio');
+const Film = require('../lib/Models/Film');
+const Actor = require('../lib/Models/Actor');
 
 describe('app routes', () => {
   beforeAll(() => {
@@ -16,12 +18,28 @@ describe('app routes', () => {
   });
 
   let studio;
-  beforeEach(async() => {
+  let actor;
+  let film;
+  beforeEach(async () => {
     studio = await Studio.create({
       name: 'Star',
       city: 'New York',
       state: 'New York',
       country: 'United States'
+    });
+    actor = await Actor.create({
+      name: 'Adam Driver',
+      dateOfBirth: new Date(),
+      placeOfBirth: 'Santa Clara'
+    });
+    film = await Film.create({
+      title: 'Devils Rejects',
+      studio: studio._id,
+      released: 1978,
+      cast: [{
+        role: 'clown',
+        actor: actor._id
+      }]
     });
   });
   afterAll(() => {
@@ -62,6 +80,24 @@ describe('app routes', () => {
             _id: studio._id.toString(),
             name: studio.name
           });
+        });
+      });
+  });
+  it('gets a studio by id', async() => {
+   
+    return request(app)
+      .get(`/api/v1/studios/${studio._id}`)
+      .then(res => {
+       
+        expect(res.body).toEqual({
+          _id: studio._id.toString(),
+          name: 'Star',
+          city: 'New York',
+          state: 'New York',
+          country: 'United States',
+          films: [{ _id: film._id.toString(), title: film.title, studio: studio._id.toString() }],
+          // actor: actor.id,
+          __v: 0
         });
       });
   });
