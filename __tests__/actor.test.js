@@ -5,6 +5,7 @@ const app = require('../lib/app');
 const connect = require('../lib/utils/connect');
 const mongoose = require('mongoose');
 const Actor = require('../lib/Models/Actor');
+const Film = require('../lib/Models/Film');
 
 describe('actor routes', () => {
   beforeAll(() => {
@@ -16,6 +17,7 @@ describe('actor routes', () => {
   });
 
   let actor;
+  let film;
   let dateOfBirth;
   beforeEach(async() => {
     actor = await Actor.create({
@@ -23,6 +25,16 @@ describe('actor routes', () => {
       dateOfBirth,
       placeOfBirth: 'Santa Clara'
     });
+    // film = await Film.create(
+    //   {
+    //     title: 'Devils Rejects',
+    //     studio: studio._id,
+    //     released: 1978,
+    //     cast: [{
+    //       role: 'clown',
+    //       actor: actor._id
+    //     }]
+    //   });
   });
   afterAll(() => {
     return mongoose.connection.close();
@@ -46,4 +58,22 @@ describe('actor routes', () => {
         });
       });
   });
+  it('can get an actor by id', async() => {
+    
+    const dateOfBirth = new Date();
+    return request(app)
+      .get(`/api/v1/actors/${actor._id}`)
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: actor._id.toString(),
+          name: 'Adam Driver',
+          dateOfBirth,
+          placeOfBirth: 'Santa Clara',
+          films: JSON.parse(JSON.stringify(films)),
+          __v:0
+        });
+      });
+  });
 });
+
+
