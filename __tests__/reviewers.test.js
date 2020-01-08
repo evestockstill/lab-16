@@ -76,13 +76,31 @@ describe('app routes', () => {
   });
   it('delete a reviewer', () => {
     return request(app)
-      .delete(`/api/v1/reviewers/${reviewer.id}`)
+      .delete(`/api/v1/reviewers/${reviewer._id}`)
       .then(res => {
         expect(res.body).toEqual({
-          _id: reviewer._id,
+          _id: reviewer._id.toString(),
           name: 'Captain Spalding',
           company: 'Firefly reviews',
           __v: 0
+        });
+      });
+  });
+  it('gets a reviewer by id', () => {
+    return request(app)
+      .get(`/api/v1/reviewers/${reviewer.id}`)
+      .then(res => {
+        expect(res.body).toEqual({
+          __v: 0,
+          _id: reviewer._id.toString(),
+          name: reviewer.name,
+          company: reviewer.company,
+          reviews: [{
+            _id: review._id,
+            rating: review.rating,
+            review: review.review,
+            film: { id: film._id, title: film.title },
+          }],
         });
       });
   });
