@@ -20,7 +20,7 @@ describe('studio routes', () => {
   let studio;
   let actor;
   let film;
-  beforeEach(async () => {
+  beforeEach(async() => {
     studio = await Studio.create({
       name: 'Star',
       city: 'New York',
