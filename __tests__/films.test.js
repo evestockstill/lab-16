@@ -78,9 +78,7 @@ describe('app routes', () => {
     return request(app)
       .get(`/api/v1/films/${film._id}`)
       .then(res => {
-        console.log(res.body);
         expect(res.body).toEqual({
-
           __v: 0,
           _id: film._id.toString(),
           title: film.title,
@@ -90,7 +88,6 @@ describe('app routes', () => {
             _id: expect.any(String),
             role: 'clown',
             actor: expect.any(String)
-
           }],
           reviews: [{
             _id: expect.any(String),
@@ -98,7 +95,6 @@ describe('app routes', () => {
             reviewer: { _id: expect.any(String), name: reviewer.name },
             film: expect.any(String)
           }]
-
         });
       });
   });

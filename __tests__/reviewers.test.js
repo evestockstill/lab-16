@@ -88,19 +88,21 @@ describe('app routes', () => {
   });
   it('gets a reviewer by id', () => {
     return request(app)
-      .get(`/api/v1/reviewers/${reviewer.id}`)
+      .get(`/api/v1/reviewers/${reviewer._id}`)
       .then(res => {
+        console.log(res.body.reviews[0].film);
         expect(res.body).toEqual({
           __v: 0,
           _id: reviewer._id.toString(),
           name: reviewer.name,
           company: reviewer.company,
           reviews: [{
-            _id: review._id,
+            _id: review._id.toString(),
             rating: review.rating,
             review: review.review,
-            film: { id: film._id, title: film.title },
-          }],
+            film: { _id: film._id.toString(), title: film.title },
+            reviewer: reviewer._id.toString()
+          }]
         });
       });
   });
