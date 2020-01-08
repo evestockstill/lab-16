@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const Actor = require('../lib/Models/Actor');
 const Film = require('../lib/Models/Film');
 const Studio = require('../lib/Models/Studio');
-const Review = require('../lib/Models/Review');
+
 
 
 describe('app routes', () => {
@@ -20,10 +20,9 @@ describe('app routes', () => {
   });
 
   let studio;
-  let Review;
   let actor;
   let film;
-  beforeEach(async () => {
+  beforeEach(async() => {
     studio = await Studio.create({
       name: 'Star',
       city: 'New York',
@@ -75,15 +74,16 @@ describe('app routes', () => {
     return request(app)
       .get(`/api/v1/actors/${actor._id}`)
       .then(res => {
-        console.log(res.body)
         expect(res.body).toEqual({
-          _id: actor._id,
+          _id: actor._id.toString(),
           name: actor.name,
           dateOfBirth: expect.any(String),
           placeOfBirth: actor.placeOfBirth,
           __v: 0,
           films: [{
-            id: film._id.toString(),
+            _id: film._id.toString(),
+            title: film.title,
+            released: film.released
           
           }]
         });
