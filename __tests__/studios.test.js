@@ -8,7 +8,7 @@ const Studio = require('../lib/Models/Studio');
 const Film = require('../lib/Models/Film');
 const Actor = require('../lib/Models/Actor');
 
-describe('app routes', () => {
+describe('studio routes', () => {
   beforeAll(() => {
     connect();
   });
@@ -84,11 +84,9 @@ describe('app routes', () => {
       });
   });
   it('gets a studio by id', async() => {
-   
     return request(app)
       .get(`/api/v1/studios/${studio._id}`)
       .then(res => {
-       
         expect(res.body).toEqual({
           _id: studio._id.toString(),
           name: 'Star',
@@ -96,7 +94,6 @@ describe('app routes', () => {
           state: 'New York',
           country: 'United States',
           films: [{ _id: film._id.toString(), title: film.title, studio: studio._id.toString() }],
-          // actor: actor.id,
           __v: 0
         });
       });

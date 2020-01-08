@@ -51,7 +51,7 @@ describe('app routes', () => {
     review = await Review.create({
       rating: 5,
       reviewer: reviewer._id,
-      review: 'It was a killer movie',
+      review: 'It was a killer review',
       film: film._id
     });
   });
@@ -78,4 +78,19 @@ describe('app routes', () => {
         });
       });
   });
+  it('delete a review', () => {
+    return request(app)
+      .delete(`/api/v1/reviews/${review.id}`)
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: review._id.toString(),
+          rating: 5,
+          reviewer: reviewer._id.toString(),
+          review: 'It was a killer review',
+          film: film._id.toString(),
+          __v: 0
+        });
+      });
+  });
 });
+
