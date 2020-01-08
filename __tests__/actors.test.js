@@ -84,8 +84,24 @@ describe('app routes', () => {
             _id: film._id.toString(),
             title: film.title,
             released: film.released
-          
           }]
+        });
+      });
+  });
+  it('gets all actors', async() => {
+    const actors = await Actor.create([
+      { name: 'actor 1', dateOfBirth: '1/3/2020', placeOfBirth: 'Oregon' },
+      { name: 'actor 2', dateOfBirth: '1/3/2020', placeOfBirth: 'Washington' },
+      { name: 'actor 3', dateOfBirth: '1/3/2020', placeOfBirth: 'California' }
+    ]);
+    return request(app)
+      .get('/api/v1/actors')
+      .then(res => {
+        actors.forEach(actor => {
+          expect(res.body).toContainEqual({
+            _id: actor._id.toString(),
+            name: actor.name
+          });
         });
       });
   });
