@@ -88,9 +88,7 @@ describe('app routes', () => {
     return request(app)
       .get('/api/v1/reviews')
       .then(res => {
-        console.log(res.body.length);
         expect(res.body).toHaveLength(100);
-       
       });
   });
   it('delete a review', () => {
