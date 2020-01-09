@@ -78,6 +78,7 @@ describe('app routes', () => {
     return request(app)
       .delete(`/api/v1/reviewers/${reviewer._id}`)
       .then(res => {
+       
         expect(res.body).toEqual({
           _id: reviewer._id.toString(),
           name: 'Captain Spalding',
@@ -86,11 +87,24 @@ describe('app routes', () => {
         });
       });
   });
+  it('updates a reviewer from patch', () => {
+    return request(app)
+      .patch(`/api/v1/reviewers/${reviewer._id}`)
+      .send({ name: 'Baby Spalding' })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: reviewer._id.toString(),
+          name: 'Baby Spalding',
+          company: 'Firefly reviews',
+          __v: 0
+        });
+      });
+  });
+
   it('gets a reviewer by id', () => {
     return request(app)
       .get(`/api/v1/reviewers/${reviewer._id}`)
       .then(res => {
-        console.log(res.body.reviews[0].film);
         expect(res.body).toEqual({
           __v: 0,
           _id: reviewer._id.toString(),
