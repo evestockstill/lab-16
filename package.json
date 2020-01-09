@@ -1,10 +1,10 @@
 {
-  "name": ".",
+  "name": "ripe",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "jest --verbose --runInBand",
+    "test": "jest --verbose --runInBand --detectOpenHandles",
     "test:watch": "npm run test -- --watch",
     "start": "node server.js",
     "start:watch": "nodemon server.js"
