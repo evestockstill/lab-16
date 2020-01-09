@@ -49,6 +49,7 @@ describe('app routes', () => {
   afterAll(() => {
     return mongoose.connection.close();
   });
+
   it('can create a new actor', () => {
     const dateOfBirth = new Date();
     return request(app)
@@ -70,7 +71,7 @@ describe('app routes', () => {
         });
       });
   });
-  it('can get an actor by id', async() => {
+  it('can get an actor by id', () => {
     return request(app)
       .get(`/api/v1/actors/${actor._id}`)
       .then(res => {

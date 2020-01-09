@@ -28,7 +28,7 @@ describe('app routes', () => {
       name: 'Adam Driver',
       dateOfBirth: 'may 29',
       placeOfBirth: 'Santa Clara'
-    })
+    });
   });
   
   afterAll(() => {
@@ -98,8 +98,6 @@ describe('app routes', () => {
         });
       });
   });
-
-  
 });
 
 
