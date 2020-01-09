@@ -101,7 +101,10 @@ describe('app routes', () => {
         actors.forEach(actor => {
           expect(res.body).toContainEqual({
             _id: actor._id.toString(),
-            name: actor.name
+            name: actor.name,
+            dateOfBirth: actor.dateOfBirth.toISOString(),
+            placeOfBirth: actor.placeOfBirth,
+            __v: 0
           });
         });
       });
